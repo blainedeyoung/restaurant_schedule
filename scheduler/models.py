@@ -3,8 +3,7 @@ from django.db import models
 
 class Restaurant(models.Model):
     """
-    We could do without a separate model for Restaurants,
-    this seemed better to me. We may want to expand functionality later.
+    Stores the name of each restaurant.
     """
     name = models.CharField(max_length=200, unique=True)
 
@@ -14,14 +13,22 @@ class Restaurant(models.Model):
 
 class Schedule(models.Model):
     """
-    The restaurant is the name. The schedule is the whole block of text from the csv file.
-    The way I set this up allows you to input a new csv file which completely replaces
-    any old schedules. They are still in the database just marked inactive. I figure it would
-    be easy to go back later and allow you to switch between stored schedules.
+    Stores the operating hours for each restaurant for specific days.
     """
+    DAYS_OF_WEEK = [
+        ('Mon', 'Monday'),
+        ('Tue', 'Tuesday'),
+        ('Wed', 'Wednesday'),
+        ('Thu', 'Thursday'),
+        ('Fri', 'Friday'),
+        ('Sat', 'Saturday'),
+        ('Sun', 'Sunday'),
+    ]
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='schedules')
-    schedule = models.TextField()  # Store the full schedule string
+    day_of_week = models.CharField(max_length=3, choices=DAYS_OF_WEEK)
+    opening_time = models.TimeField()
+    closing_time = models.TimeField()
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.restaurant.name} - {'Active' if self.is_active else 'Inactive'}"
+        return f"{self.restaurant.name} - {self.get_day_of_week_display()} ({self.opening_time} to {self.closing_time})"
