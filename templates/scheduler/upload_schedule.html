@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Upload Schedule</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file" accept=".csv">
+    <button type="submit">Upload</button>
+</form>
+<p>CSV format: "Restaurant Name, Schedule"</p>
+<p>Schedule format examples:</p>
+<ul>
+    <li>"Mon-Sun 11:00 am - 10 pm"</li>
+    <li>"Mon-Sat 11am - 12am/Sun 12pm - 2am"</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Open Restaurants</h1>
+<p>Day and time: {{ input }}</p>
+{% if open_restaurants %}
+    <h2>Open restaurants:</h2>
+    <ul>
+    {% for restaurant in open_restaurants %}
+        <li>{{ restaurant }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No restaurants are open at this time. This could be because:</p>
+    <ul>
+        <li>The requested day and time fall outside of all restaurants' operating hours.</li>
+        <li>Some restaurants may not have any hours listed for the requested day.</li>
+    </ul>
+{% endif %}
+{% endblock %}

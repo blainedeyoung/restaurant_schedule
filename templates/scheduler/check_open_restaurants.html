@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Check Open Restaurants</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="datetime">Enter day and time (e.g., "Mon 12:45pm"):</label>
+    <input type="text" id="datetime" name="datetime" required>
+    <button type="submit">Check</button>
+</form>
+{% endblock %}

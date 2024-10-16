@@ -1,0 +1,40 @@
+<!--
+    Ordinarily I would make a template folder for each app in that app
+    and put the CSS in staticfiles folders for each template
+    but for the purposes of this project, I think this setup is good enough
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Scheduler</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        nav { margin-bottom: 20px; }
+        nav a { margin-right: 10px; }
+        .messages { list-style: none; padding: 0; }
+        .messages li { padding: 10px; margin-bottom: 10px; }
+        .success { background-color: #dff0d8; border: 1px solid #d6e9c6; }
+        .error { background-color: #f2dede; border: 1px solid #ebccd1; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'check_open_restaurants' %}">Check Open Restaurants</a>
+        <a href="{% url 'upload_schedule' %}">Upload Schedule</a>
+    </nav>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
